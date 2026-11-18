@@ -197,13 +197,11 @@ section{padding:clamp(88px,14vh,148px) 0 0}
 .d-rest .stage img{width:100%;max-width:260px;height:auto}
 
 /* ---------- films */
-.films{display:grid;grid-template-columns:minmax(0,2.1fr) minmax(0,1fr);gap:24px;align-items:start}
+.films{display:grid;grid-template-columns:minmax(0,1fr)}
 .film{margin:0}
 .film video{width:100%;aspect-ratio:16/9;border-radius:6px;background:#051a33;box-shadow:0 0 0 1px rgba(214,235,255,.16),0 30px 70px -30px rgba(0,0,0,.7)}
 .film figcaption{display:flex;justify-content:space-between;gap:12px;margin-top:12px;font:500 11.5px/1.4 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
 .film figcaption b{color:var(--chalk);font-weight:600}
-.film .aside{margin:14px 0 0;color:var(--muted);font-size:15px}
-@media (max-width:860px){.films{grid-template-columns:minmax(0,1fr)}}
 
 /* ---------- materials */
 .schedule{width:100%;border-collapse:collapse;font-size:14.5px}
@@ -344,7 +342,7 @@ footer{padding:clamp(96px,14vh,150px) 0 48px}
     <section id="details" aria-labelledby="h-details">
       <div class="sec-head reveal">
         <div class="no" aria-hidden="true">01</div>
-        <div><div class="eyebrow">What moves, and when</div><h2 id="h-details">Motion that means something.</h2></div>
+        <div><h2 id="h-details">Motion that means something.</h2></div>
         <p>Every animation in Blueprint is tied to real app state. If nothing is running, nothing moves. That's the whole trick: a glance tells you whether your agent is still at work.</p>
       </div>
       <div class="details">
@@ -388,8 +386,7 @@ footer{padding:clamp(96px,14vh,150px) 0 48px}
     <section id="watch" aria-labelledby="h-watch">
       <div class="sec-head reveal">
         <div class="no" aria-hidden="true">02</div>
-        <div><div class="eyebrow">Watch it work</div><h2 id="h-watch">One full turn, start to finish.</h2></div>
-        <p>A captioned walkthrough of every state: idle, composing, a turn in flight, background agents, the answer landing, and narrow windows. There's also a 30-second cut with sound.</p>
+        <div><h2 id="h-watch">One full turn, start to finish.</h2></div>
       </div>
       <div class="films">
         <figure class="film reveal">
@@ -398,20 +395,13 @@ footer{padding:clamp(96px,14vh,150px) 0 48px}
           </video>
           <figcaption><span><b>Demo</b> · captioned walkthrough</span><span>1:24</span></figcaption>
         </figure>
-        <figure class="film reveal">
-          <video controls preload="metadata" playsinline poster="assets/sizzle.jpg">
-            <source src="assets/sizzle.mp4" type="video/mp4">
-          </video>
-          <figcaption><span><b>Sizzle</b> · sound on</span><span>0:30</span></figcaption>
-          <p class="aside">Footage is a staged replica of the T3 Code window, styled with the theme's actual CSS, with made-up threads.</p>
-        </figure>
       </div>
     </section>
 
     <section id="materials" aria-labelledby="h-mat">
       <div class="sec-head reveal">
         <div class="no" aria-hidden="true">03</div>
-        <div><div class="eyebrow">Materials schedule</div><h2 id="h-mat">Cyanotype paper, chalk ink, one yellow pencil.</h2></div>
+        <div><h2 id="h-mat">Cyanotype paper, chalk ink, one yellow pencil.</h2></div>
         <p>Blue is the paper and white is the ink. Yellow is reserved for things that need you: focus, the send button, and work in progress. Click a row to copy its hex.</p>
       </div>
       <div class="cols2 reveal" id="schedule">
@@ -441,7 +431,7 @@ footer{padding:clamp(96px,14vh,150px) 0 48px}
     <section id="install" aria-labelledby="h-install">
       <div class="sec-head reveal">
         <div class="no" aria-hidden="true">04</div>
-        <div><div class="eyebrow">Install</div><h2 id="h-install">On your screen in about ten seconds.</h2></div>
+        <div><h2 id="h-install">On your screen in about ten seconds.</h2></div>
         <p>Blueprint is a single JSON file: colors plus a little CSS. Add it from inside the app, or set it from the terminal.</p>
       </div>
       <div class="install">
