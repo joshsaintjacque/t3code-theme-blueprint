@@ -1,0 +1,572 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Blueprint · a theme for T3 Code</title>
+<meta name="description" content="A cyanotype theme for T3 Code. While your agent works, a pen plotter inks a part in the margin. When the turn ends, the sheet holds still.">
+<meta name="theme-color" content="#0b3260">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Blueprint · a theme for T3 Code">
+<meta property="og:description" content="Your agent drafts. The sheet fills in. A cyanotype theme that only moves while work is happening.">
+<meta property="og:url" content="https://joshsaintjacque.github.io/t3code-theme-blueprint/">
+<meta property="og:image" content="https://joshsaintjacque.github.io/t3code-theme-blueprint/assets/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://joshsaintjacque.github.io/t3code-theme-blueprint/assets/og.png">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230b3260'/%3E%3Cpath d='M16 5v22M5 16h22' stroke='%23d6ebff' stroke-width='1.5' stroke-opacity='.6'/%3E%3Ccircle cx='16' cy='16' r='6' fill='none' stroke='%23ffd166' stroke-width='2.5'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Instrument+Sans:ital,wght@0,400..700;1,400&family=Martian+Mono:wdth,wght@75..112.5,300..800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#0b3260; --paper-deep:#072448; --paper-ink:#051a33;
+  --chrome:#082a50; --surface:#0d3766; --raised:#114073;
+  --line:#2b5d91; --line-soft:rgba(214,235,255,.14); --grid:rgba(214,235,255,.06); --grid-fine:rgba(214,235,255,.028);
+  --chalk:#eef6ff; --ink:#d6ebff; --muted:#a6c3e0; --faint:#7fa2c7;
+  --pencil:#ffd166; --pencil-ink:#1d1a10; --cyan:#7fe3ff;
+  --mono:"Martian Mono",ui-monospace,"SF Mono",Menlo,monospace;
+  --sans:"Instrument Sans",ui-sans-serif,system-ui,sans-serif;
+  --hand:"Architects Daughter","Comic Sans MS",cursive;
+  --gutter:clamp(16px,4vw,56px); --maxw:1240px;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper-ink);color:var(--chalk);font:400 17px/1.6 var(--sans);overflow-x:hidden;
+  background:
+    radial-gradient(ellipse 90% 60% at 50% 0%,rgba(41,105,170,.45),transparent 70%),
+    linear-gradient(var(--grid) 1px,transparent 1px) 0 0/96px 96px,
+    linear-gradient(90deg,var(--grid) 1px,transparent 1px) 0 0/96px 96px,
+    linear-gradient(var(--grid-fine) 1px,transparent 1px) 0 0/16px 16px,
+    linear-gradient(90deg,var(--grid-fine) 1px,transparent 1px) 0 0/16px 16px,
+    linear-gradient(180deg,var(--paper) 0%,var(--paper-deep) 55%,var(--paper-ink) 100%);
+  background-attachment:scroll}
+a{color:var(--cyan);text-decoration-style:dashed;text-underline-offset:3px}
+a:hover{color:var(--pencil)}
+::selection{background:rgba(255,209,102,.32)}
+:focus-visible{outline:2px solid var(--pencil);outline-offset:3px}
+img,video{display:block;max-width:100%}
+
+/* sheet border with zone markers */
+.sheet{position:fixed;inset:8px;border:1px solid var(--line-soft);pointer-events:none;z-index:40}
+.sheet i{position:absolute;font:500 9px/1 var(--mono);color:rgba(214,235,255,.32);font-style:normal;letter-spacing:.1em}
+.sheet .t{top:-1px;transform:translate(-50%,-50%);background:var(--paper);padding:2px 5px}
+.sheet .l{left:-1px;transform:translate(-50%,-50%);background:var(--paper-deep);padding:4px 2px}
+@media (max-width:700px){.sheet{display:none}}
+
+/* CAD crosshair */
+.xh{position:fixed;inset:0;pointer-events:none;z-index:39;opacity:0;transition:opacity .3s}
+.xh.on{opacity:1}
+.xh .h,.xh .v{position:absolute;background:rgba(214,235,255,.09)}
+.xh .h{left:0;right:0;height:1px;top:0}
+.xh .v{top:0;bottom:0;width:1px;left:0}
+.xh .r{position:absolute;font:500 10px/1 var(--mono);color:rgba(255,209,102,.75);letter-spacing:.08em;white-space:nowrap}
+@media (pointer:coarse){.xh{display:none}}
+
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 var(--gutter)}
+.eyebrow{font:500 12px/1.2 var(--mono);letter-spacing:.22em;text-transform:uppercase;color:var(--muted)}
+.eyebrow b{color:var(--pencil);font-weight:600}
+
+/* ---------- top bar */
+header.top{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:28px 0 0}
+.mark{display:flex;align-items:center;gap:10px;font:700 13px/1 var(--mono);letter-spacing:.2em;color:var(--chalk);text-decoration:none}
+.mark svg{width:22px;height:22px}
+.top nav{display:flex;gap:22px;align-items:center}
+.top nav a{font:500 12px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted);text-decoration:none}
+.top nav a:hover{color:var(--chalk)}
+.top nav .gh{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);padding:9px 12px;border-radius:3px;color:var(--chalk)}
+.top nav .gh:hover{border-color:var(--pencil);color:var(--pencil)}
+.top nav .gh svg{width:15px;height:15px;fill:currentColor}
+@media (max-width:640px){.top nav a:not(.gh){display:none}}
+
+/* ---------- hero */
+.hero{padding:clamp(48px,9vh,96px) 0 0;position:relative}
+.wordmark{width:100%;height:auto;margin:18px 0 0;overflow:visible}
+.wordmark text{font-family:var(--mono);font-weight:800;font-stretch:112.5%;font-size:150px;fill:var(--chalk);stroke:var(--chalk);stroke-width:1.2;letter-spacing:0}
+.js .wordmark text{fill:transparent;stroke-dasharray:620;stroke-dashoffset:620}
+.js.drawn .wordmark text{animation:ink 2.1s cubic-bezier(.6,0,.25,1) forwards,fillin .7s 1.75s ease-out forwards}
+@keyframes ink{to{stroke-dashoffset:0}}
+@keyframes fillin{to{fill:var(--chalk);stroke-opacity:0}}
+.dim-h{position:relative;height:22px;margin:4px 0 0;color:var(--faint)}
+.dim-h:before{content:"";position:absolute;left:0;right:0;top:50%;border-top:1px solid currentColor;opacity:.55;transform-origin:left;transform:scaleX(var(--dimx,1))}
+.dim-h:after{content:"";position:absolute;left:0;right:0;top:4px;bottom:4px;border-left:1px solid currentColor;border-right:1px solid currentColor;opacity:.55}
+.dim-h span{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);background:var(--paper);padding:0 10px;font:500 11px/1 var(--mono);letter-spacing:.18em;color:var(--muted);white-space:nowrap}
+.js .dim-h{--dimx:0}.js.drawn .dim-h{--dimx:1;transition:none}
+.js.drawn .dim-h:before{transition:transform 1.2s .9s cubic-bezier(.6,0,.25,1)}
+.lede{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:clamp(24px,5vw,72px);align-items:end;margin-top:clamp(28px,5vh,52px)}
+.lede h1{margin:0;font:600 clamp(30px,4.4vw,54px)/1.06 var(--sans);letter-spacing:-.02em;color:var(--chalk);text-wrap:balance}
+.lede h1 em{font-style:normal;color:var(--pencil);position:relative;white-space:nowrap}
+.lede h1 em:after{content:"";position:absolute;left:-2%;right:-2%;bottom:-.04em;height:.11em;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 8' preserveAspectRatio='none'%3E%3Cpath d='M2 5.5C40 2.5 90 2 120 3.6S170 6 198 3' fill='none' stroke='%23ffd166' stroke-width='2.4' stroke-linecap='round'/%3E%3C/svg%3E") 0 0/100% 100% no-repeat;opacity:.85}
+.lede p{margin:0 0 20px;color:var(--muted);font-size:clamp(16px,1.35vw,18.5px);max-width:46ch}
+.ctas{display:flex;flex-wrap:wrap;gap:12px}
+.btn{display:inline-flex;align-items:center;gap:10px;font:600 13px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;text-decoration:none;padding:15px 20px;border-radius:3px;border:1px solid transparent;cursor:pointer;transition:transform .15s ease,background-color .15s,border-color .15s,color .15s}
+.btn:active{transform:translateY(1px)}
+.btn.primary{background:var(--pencil);color:var(--pencil-ink)}
+.btn.primary:hover{background:#ffe08f;color:var(--pencil-ink)}
+.btn.ghost{border-color:var(--line);color:var(--chalk);background:rgba(8,42,80,.5)}
+.btn.ghost:hover{border-color:var(--ink);color:var(--chalk)}
+.btn svg{width:14px;height:14px}
+.rise{opacity:1}
+.js .rise{opacity:0;transform:translateY(10px)}
+.js.drawn .rise{animation:rise .8s cubic-bezier(.2,.7,.2,1) forwards;animation-delay:var(--d,0s)}
+@keyframes rise{to{opacity:1;transform:none}}
+@media (max-width:860px){.lede{grid-template-columns:minmax(0,1fr);align-items:start}}
+
+/* hero drawing */
+.plate{position:relative;margin:clamp(44px,7vh,72px) 0 0;padding:0 0 0 30px}
+.plate-in{position:relative;border-radius:12px;overflow:visible}
+.plate video,.plate .poster{width:100%;aspect-ratio:1600/820;border-radius:11px;background:#0b3260 url(assets/hero.jpg) center/cover;box-shadow:0 0 0 1px rgba(214,235,255,.16),0 40px 90px -30px rgba(0,0,0,.75),0 0 120px -40px rgba(127,227,255,.25)}
+.plate .vdim{position:absolute;left:-30px;top:0;bottom:0;width:22px;color:var(--faint)}
+.plate .vdim:before{content:"";position:absolute;left:50%;top:0;bottom:0;border-left:1px solid currentColor;opacity:.55}
+.plate .vdim:after{content:"";position:absolute;left:4px;right:4px;top:0;bottom:0;border-top:1px solid currentColor;border-bottom:1px solid currentColor;opacity:.55}
+.plate .vdim span{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%) rotate(-90deg);background:var(--paper-deep);padding:0 10px;font:500 11px/1 var(--mono);letter-spacing:.18em;color:var(--muted);white-space:nowrap}
+.note{position:absolute;font:400 clamp(15px,1.5vw,20px)/1.15 var(--hand);color:var(--pencil);transform:rotate(-3deg);pointer-events:none}
+.note svg{position:absolute;overflow:visible}
+.note.n1{right:2%;top:-58px;text-align:right}
+.note.n1 svg{right:58%;top:22px;width:70px;height:48px}
+@media (max-width:760px){.note.n1{display:none}}
+.balloon{position:absolute;width:28px;height:28px;margin:-14px 0 0 -14px;border-radius:50%;border:1.5px solid var(--pencil);background:rgba(7,36,72,.86);color:var(--pencil);font:600 12px/25px var(--mono);text-align:center;box-shadow:0 0 0 4px rgba(255,209,102,.12);cursor:default;transition:transform .2s,background-color .2s,color .2s}
+.balloon.hot{transform:scale(1.18);background:var(--pencil);color:var(--pencil-ink)}
+@media (max-width:560px){.balloon{width:22px;height:22px;margin:-11px 0 0 -11px;font-size:10px;line-height:19px}}
+.legend{list-style:none;margin:22px 0 0;padding:0 0 0 30px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px 28px;counter-reset:b}
+.legend li{display:flex;gap:12px;align-items:baseline;color:var(--muted);font-size:14.5px;line-height:1.45;padding:6px 0;border-top:1px solid var(--line-soft);cursor:default}
+.legend li b{color:var(--chalk);font-weight:600}
+.legend li:before{counter-increment:b;content:counter(b);flex:none;width:20px;height:20px;border-radius:50%;border:1px solid var(--pencil);color:var(--pencil);font:600 10px/18px var(--mono);text-align:center;transform:translateY(-1px)}
+.legend li.hot b{color:var(--pencil)}
+@media (max-width:900px){.legend{grid-template-columns:1fr 1fr}}
+@media (max-width:560px){.legend{grid-template-columns:minmax(0,1fr);padding-left:0}.plate{padding-left:0}.plate .vdim{display:none}}
+
+/* ---------- sections */
+section{padding:clamp(88px,14vh,148px) 0 0}
+.sec-head{display:grid;grid-template-columns:auto 1fr;gap:18px 28px;align-items:end;margin-bottom:clamp(32px,5vh,52px)}
+.sec-head .no{font:300 clamp(48px,7vw,92px)/.8 var(--mono);color:transparent;-webkit-text-stroke:1px rgba(214,235,255,.5);letter-spacing:-.04em}
+.sec-head h2{margin:8px 0 0;font:600 clamp(26px,3.3vw,42px)/1.1 var(--sans);letter-spacing:-.015em;text-wrap:balance}
+.sec-head p{grid-column:2;margin:0;color:var(--muted);max-width:60ch}
+.rule{height:1px;background:linear-gradient(90deg,var(--pencil),rgba(255,209,102,.0));transform-origin:left;transform:scaleX(0);transition:transform 1.1s cubic-bezier(.6,0,.25,1)}
+.in .rule,.no-io .rule{transform:scaleX(1)}
+@media (max-width:640px){.sec-head{grid-template-columns:minmax(0,1fr)}.sec-head p{grid-column:1}}
+
+/* details grid */
+.details{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:20px}
+.detail{position:relative;border:1px solid var(--line-soft);background:linear-gradient(180deg,rgba(13,55,102,.55),rgba(8,37,72,.55));border-radius:4px;padding:24px;display:flex;flex-direction:column;gap:14px;min-width:0}
+.detail:before,.detail:after{content:"";position:absolute;width:12px;height:12px;border-color:var(--pencil);border-style:solid;opacity:.75}
+.detail:before{top:-1px;left:-1px;border-width:1.5px 0 0 1.5px}
+.detail:after{bottom:-1px;right:-1px;border-width:0 1.5px 1.5px 0}
+.detail .tag{font:500 11px/1 var(--mono);letter-spacing:.2em;color:var(--faint);text-transform:uppercase;display:flex;justify-content:space-between;gap:12px}
+.detail .tag b{color:var(--pencil);font-weight:600}
+.detail h3{margin:0;font:600 21px/1.2 var(--sans);letter-spacing:-.01em}
+.detail p{margin:0;color:var(--muted);font-size:15.5px}
+.d-plot{grid-column:span 5;grid-row:span 2}
+.d-rail{grid-column:span 7}
+.d-dash{grid-column:span 4}
+.d-rest{grid-column:span 3}
+@media (max-width:980px){.d-plot{grid-column:span 12;grid-row:auto}.d-rail{grid-column:span 12}.d-dash{grid-column:span 7}.d-rest{grid-column:span 5}}
+@media (max-width:640px){.d-dash,.d-rest{grid-column:span 12}}
+.stage{position:relative;border:1px dashed rgba(214,235,255,.16);border-radius:3px;background:
+    linear-gradient(var(--grid) 1px,transparent 1px) 0 0/24px 24px,
+    linear-gradient(90deg,var(--grid) 1px,transparent 1px) 0 0/24px 24px,rgba(5,26,51,.35);overflow:hidden}
+.d-plot .stage{flex:1;display:grid;place-items:center;padding:18px;min-height:340px}
+.d-plot .stage img{width:min(100%,300px);height:auto}
+.d-plot .replay{position:absolute;right:10px;bottom:10px;font:500 10px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted);background:rgba(8,42,80,.85);border:1px solid var(--line);border-radius:3px;padding:7px 9px;cursor:pointer}
+.d-plot .replay:hover{color:var(--pencil);border-color:var(--pencil)}
+/* gantry */
+.rail{height:150px;display:flex;flex-direction:column}
+.rail .bar{height:46px;border-bottom:1px solid rgba(214,235,255,.22);position:relative;display:flex;align-items:center;gap:10px;padding:0 16px;font:500 12.5px/1 var(--sans);color:var(--chalk)}
+.rail .bar small{color:var(--faint);font-size:12px}
+.rail .bar:after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:1px;background:repeating-linear-gradient(90deg,rgba(214,235,255,.4) 0 1px,transparent 1px 24px)}
+.rail .car{position:absolute;bottom:-5px;left:6%;width:28px;height:9px;animation:car 8s cubic-bezier(.45,0,.55,1) infinite alternate}
+.rail .car:before{content:"";position:absolute;left:0;right:0;top:4px;height:2px;background:var(--pencil);border-radius:1px}
+.rail .car:after{content:"";position:absolute;left:13px;top:0;width:2px;height:9px;background:var(--pencil)}
+@keyframes car{to{left:calc(94% - 28px)}}
+.rail .body{flex:1;display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:16px}
+.rail .body i{display:block;height:7px;border-radius:2px;background:rgba(214,235,255,.1);margin-bottom:9px}
+.rail .body i:nth-child(2){width:80%}.rail .body i:nth-child(3){width:60%}
+.rail .body .q{justify-self:end;width:72%;height:28px;border:1px solid #4f86bd;background:#134a80;border-radius:2px}
+/* marching dash */
+.rows{padding:10px 0}
+.rows div{display:flex;justify-content:space-between;align-items:center;padding:9px 16px;font:500 13.5px/1.2 var(--sans);color:#e3efff;position:relative}
+.rows div small{font-size:11.5px;color:#8fb0d3}
+.rows .busy small{color:var(--pencil)}
+.rows .busy:after{content:"";position:absolute;left:16px;right:16px;bottom:2px;height:1px;background:repeating-linear-gradient(90deg,var(--pencil) 0 7px,transparent 7px 12px);opacity:.85;animation:march .7s steps(7) infinite}
+@keyframes march{to{background-position-x:12px}}
+.rows .sel{background:#154a82}
+/* at rest */
+.d-rest .stage{display:grid;place-items:center;padding:16px;min-height:150px}
+.d-rest .stage img{width:100%;max-width:260px;height:auto}
+
+/* ---------- films */
+.films{display:grid;grid-template-columns:minmax(0,2.1fr) minmax(0,1fr);gap:24px;align-items:start}
+.film{margin:0}
+.film video{width:100%;aspect-ratio:16/9;border-radius:6px;background:#051a33;box-shadow:0 0 0 1px rgba(214,235,255,.16),0 30px 70px -30px rgba(0,0,0,.7)}
+.film figcaption{display:flex;justify-content:space-between;gap:12px;margin-top:12px;font:500 11.5px/1.4 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
+.film figcaption b{color:var(--chalk);font-weight:600}
+.film .aside{margin:14px 0 0;color:var(--muted);font-size:15px}
+@media (max-width:860px){.films{grid-template-columns:minmax(0,1fr)}}
+
+/* ---------- materials */
+.schedule{width:100%;border-collapse:collapse;font-size:14.5px}
+.schedule th{font:500 11px/1 var(--mono);letter-spacing:.2em;text-transform:uppercase;color:var(--faint);text-align:left;padding:0 14px 12px;border-bottom:1px solid var(--line)}
+.schedule td{padding:0 14px;height:52px;border-bottom:1px solid var(--line-soft);color:var(--muted)}
+.schedule tr{cursor:pointer;transition:background-color .15s}
+.schedule tbody tr:hover{background:rgba(214,235,255,.04)}
+.schedule .sw{width:64px}
+.schedule .sw i{display:block;width:40px;height:26px;border-radius:2px;box-shadow:inset 0 0 0 1px rgba(255,255,255,.18)}
+.schedule .role{color:var(--chalk);font-weight:600}
+.schedule .hex{font:500 13px/1 var(--mono);color:var(--ink);white-space:nowrap}
+.schedule .hex span{display:inline-block;margin-left:10px;font-size:10px;letter-spacing:.14em;color:var(--pencil);opacity:0;transition:opacity .2s}
+.schedule tr.copied .hex span{opacity:1}
+@media (max-width:640px){.schedule .use{display:none}}
+.cols2{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:0 40px}
+@media (max-width:900px){.cols2{grid-template-columns:minmax(0,1fr)}.cols2 table + table thead{display:none}}
+
+/* ---------- install */
+.install{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:24px}
+@media (max-width:900px){.install{grid-template-columns:minmax(0,1fr)}}
+.card{position:relative;border:1px solid var(--line);border-radius:4px;background:rgba(8,42,80,.72);padding:clamp(22px,3vw,34px)}
+.card.main{border-color:rgba(255,209,102,.55);box-shadow:0 0 0 4px rgba(255,209,102,.06)}
+.card h3{margin:0 0 4px;font:600 22px/1.2 var(--sans)}
+.card .sub{margin:0 0 22px;color:var(--muted);font-size:15px}
+.steps{list-style:none;margin:0;padding:0;counter-reset:s}
+.steps li{position:relative;padding:0 0 22px 48px;color:var(--muted)}
+.steps li:last-child{padding-bottom:0}
+.steps li:before{counter-increment:s;content:counter(s,decimal-leading-zero);position:absolute;left:0;top:-2px;font:600 13px/28px var(--mono);color:var(--pencil);width:34px;text-align:left}
+.steps li:after{content:"";position:absolute;left:10px;top:30px;bottom:6px;border-left:1px dashed rgba(214,235,255,.2)}
+.steps li:last-child:after{display:none}
+.steps strong{display:block;color:var(--chalk);font-weight:600;margin-bottom:6px}
+.steps .row{display:flex;flex-wrap:wrap;gap:10px;margin-top:10px}
+.path{font:500 13px/1.5 var(--mono);color:var(--ink)}
+.path b{color:var(--pencil);font-weight:500}
+.cmd{position:relative;margin:14px 0 0;background:#071f3b;border:1px dashed rgba(214,235,255,.28);border-radius:3px;padding:16px 16px 16px 16px;font:400 12.5px/1.75 var(--mono);color:#e3f0ff;overflow-x:auto;white-space:pre}
+.cmd .p{color:var(--pencil)}
+.copy-cmd{margin-top:12px}
+.fine{margin:18px 0 0;font-size:13.5px;color:var(--faint)}
+.fine code,.card code{font:500 .92em var(--mono);color:var(--ink);background:rgba(214,235,255,.07);padding:1px 5px;border-radius:2px}
+.toast{position:fixed;left:50%;bottom:28px;transform:translate(-50%,20px);opacity:0;z-index:60;background:var(--pencil);color:var(--pencil-ink);font:600 12px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;padding:13px 16px;border-radius:3px;transition:opacity .2s,transform .25s cubic-bezier(.2,.7,.2,1);pointer-events:none}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+
+/* ---------- footer title block */
+footer{padding:clamp(96px,14vh,150px) 0 48px}
+.tblock{display:grid;grid-template-columns:2.2fr 1fr 1fr 1fr;border:1px solid rgba(214,235,255,.4);font-family:var(--mono)}
+.tblock>div{padding:12px 14px;border-left:1px solid rgba(214,235,255,.4);border-top:1px solid rgba(214,235,255,.4);min-width:0}
+.tblock>div:nth-child(-n+4){border-top:0}
+.tblock>div:nth-child(4n+1){border-left:0}
+.tblock small{display:block;font-size:9.5px;letter-spacing:.2em;color:var(--faint);margin-bottom:6px}
+.tblock span{font-size:13px;font-weight:600;color:var(--chalk);letter-spacing:.04em}
+.tblock .y{color:var(--pencil)}
+.tblock a{color:var(--chalk);text-decoration:none}
+.tblock a:hover{color:var(--pencil)}
+@media (max-width:700px){.tblock{grid-template-columns:1fr 1fr}.tblock>div{border-top:1px solid rgba(214,235,255,.4)!important;border-left:1px solid rgba(214,235,255,.4)!important}.tblock>div:nth-child(odd){border-left:0!important}.tblock>div:nth-child(-n+2){border-top:0!important}.tblock .wide{grid-column:span 2;border-left:0!important}}
+.disclaimer{margin:16px 0 0;font-size:13px;color:var(--faint)}
+
+/* reveal */
+.reveal{opacity:1}
+.js .reveal{opacity:0;transform:translateY(14px);transition:opacity .9s cubic-bezier(.2,.7,.2,1),transform .9s cubic-bezier(.2,.7,.2,1)}
+.js .reveal.in{opacity:1;transform:none}
+
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*:before,*:after{animation:none!important;transition:none!important}
+  .js .wordmark text{fill:var(--chalk);stroke-dashoffset:0;stroke-opacity:0}
+  .js .rise,.js .reveal{opacity:1;transform:none}
+  .js .dim-h{--dimx:1}.rule{transform:scaleX(1)}
+  .rail .car{left:40%}
+}
+</style>
+</head>
+<body>
+<script>document.documentElement.classList.add('js')</script>
+
+<div class="sheet" aria-hidden="true" id="sheet"></div>
+<div class="xh" aria-hidden="true" id="xh"><div class="h"></div><div class="v"></div><div class="r"></div></div>
+
+<div class="wrap">
+  <header class="top">
+    <a class="mark" href="#top" aria-label="Blueprint home">
+      <svg viewBox="0 0 22 22" aria-hidden="true"><path d="M11 1v20M1 11h20" stroke="#d6ebff" stroke-opacity=".55"/><circle cx="11" cy="11" r="5" fill="none" stroke="#ffd166" stroke-width="2"/></svg>
+      BLUEPRINT
+    </a>
+    <nav aria-label="Primary">
+      <a href="#details">Details</a>
+      <a href="#watch">Watch</a>
+      <a href="#install">Install</a>
+      <a class="gh" href="https://github.com/joshsaintjacque/t3code-theme-blueprint"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>GitHub</a>
+    </nav>
+  </header>
+
+  <main id="top">
+    <div class="hero">
+      <div class="eyebrow rise" style="--d:.2s">Sheet 01 &nbsp;·&nbsp; A theme for <b>T3 Code</b></div>
+      <svg class="wordmark" viewBox="0 0 1200 150" role="img" aria-label="Blueprint">
+        <text x="0" y="128" textLength="1200" lengthAdjust="spacingAndGlyphs">BLUEPRINT</text>
+      </svg>
+      <div class="dim-h" aria-hidden="true"><span>FIG. 1 · GENERAL ARRANGEMENT</span></div>
+
+      <div class="lede">
+        <h1 class="rise" style="--d:1.1s">Your agent drafts.<br>The sheet <em>fills in.</em></h1>
+        <div class="rise" style="--d:1.3s">
+          <p>A cyanotype theme for T3 Code. While a turn runs, a pen plotter inks a machined part in the margin. When the turn ends, the pen parks and the sheet holds still, so it never gets in the way of the work.</p>
+          <div class="ctas">
+            <a class="btn primary" href="#install">Install Blueprint <svg viewBox="0 0 14 14" aria-hidden="true"><path d="M7 1v10M2.5 6.5 7 11l4.5-4.5" fill="none" stroke="currentColor" stroke-width="1.8"/></svg></a>
+            <a class="btn ghost" href="#watch">Watch the demo <svg viewBox="0 0 14 14" aria-hidden="true"><path d="M3 1.5v11l9-5.5z" fill="currentColor"/></svg></a>
+          </div>
+        </div>
+      </div>
+
+      <div class="plate rise" style="--d:1.5s">
+        <div class="note n1" aria-hidden="true">it only draws while<br>your agent is working
+          <svg viewBox="0 0 70 48"><path d="M66 2C58 26 34 40 6 44" fill="none" stroke="#ffd166" stroke-width="1.6" stroke-linecap="round"/><path d="M14 38 5 44l10 3" fill="none" stroke="#ffd166" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="vdim" aria-hidden="true"><span>LIVE TURN</span></div>
+        <div class="plate-in" id="plate">
+          <video id="hero" muted loop playsinline preload="auto" poster="assets/hero.jpg" aria-label="T3 Code with the Blueprint theme mid-turn: a pen plotter draws a part in the margin while the agent works">
+            <source src="assets/hero.mp4" type="video/mp4">
+          </video>
+          <span class="balloon" data-b="1" style="left:30%;top:24%">1</span>
+          <span class="balloon" data-b="2" style="left:55.5%;top:10%">2</span>
+          <span class="balloon" data-b="3" style="left:17.4%;top:22.5%">3</span>
+          <span class="balloon" data-b="4" style="left:77%;top:84%">4</span>
+          <span class="balloon" data-b="5" style="left:37.6%;top:88%">5</span>
+          <span class="balloon" data-b="6" style="left:86.5%;top:74.5%">6</span>
+        </div>
+        <ol class="legend" id="legend">
+          <li data-b="1"><span><b>Pen plotter.</b> Inks a part, then hatches and dimensions it, over each turn.</span></li>
+          <li data-b="2"><span><b>Gantry carriage.</b> Rides the header rail while work runs, stows when it stops.</span></li>
+          <li data-b="3"><span><b>Busy threads.</b> Any thread with an agent on it gets a marching pencil line.</span></li>
+          <li data-b="4"><span><b>Working row.</b> The live row is underlined in the same pencil.</span></li>
+          <li data-b="5"><span><b>Composer.</b> Corner ticks, like registration marks, that extend on focus.</span></li>
+          <li data-b="6"><span><b>Title block.</b> Drawn by the agent, checked by you. Rev B.</span></li>
+        </ol>
+      </div>
+    </div>
+
+    <section id="details" aria-labelledby="h-details">
+      <div class="sec-head reveal">
+        <div class="no" aria-hidden="true">01</div>
+        <div><div class="eyebrow">What moves, and when</div><h2 id="h-details">Motion that means something.</h2></div>
+        <p>Every animation in Blueprint is tied to real app state. If nothing is running, nothing moves. That's the whole trick: a glance tells you whether your agent is still at work.</p>
+      </div>
+      <div class="details">
+        <article class="detail d-plot reveal">
+          <div class="tag"><span>Detail <b>A</b></span><span>32s cycle</span></div>
+          <div class="stage">
+            <img id="plotimg" src="assets/svg/part.svg" alt="Animated line drawing: a pen plotter outlines a bracket, drills two holes, hatches a section and adds dimensions" width="300" height="467">
+            <button class="replay" id="replay" type="button">↺ Replot</button>
+          </div>
+          <h3>A pen plotter in the margin</h3>
+          <p>On wide windows, the gutter beside the chat becomes a drafting table. Outline, bores, section hatch, dimensions, callouts, in that order. Between turns you get the finished drawing, perfectly still.</p>
+        </article>
+        <article class="detail d-rail reveal">
+          <div class="tag"><span>Detail <b>B</b></span><span>Header rail</span></div>
+          <div class="stage rail" aria-hidden="true">
+            <div class="bar">Sync client retries <small>t3code · main</small><span class="car"></span></div>
+            <div class="body"><div><i></i><i></i><i></i></div><div class="q"></div></div>
+          </div>
+          <h3>A carriage on the header rail</h3>
+          <p>A small pencil carriage shuttles along the header's rule for as long as the turn runs. When the work is done it retracts instead of snapping away.</p>
+        </article>
+        <article class="detail d-dash reveal">
+          <div class="tag"><span>Detail <b>C</b></span><span>Sidebar</span></div>
+          <div class="stage rows" aria-hidden="true">
+            <div class="sel">Blueprint theme <small>now</small></div>
+            <div class="busy">Fix websocket reconnect <small>working</small></div>
+            <div>Refactor composer state <small>1d</small></div>
+          </div>
+          <h3>Marching pencil lines</h3>
+          <p>Background agents stay visible. Busy threads get a dashed line that marches in steps, never a spinner.</p>
+        </article>
+        <article class="detail d-rest reveal">
+          <div class="tag"><span>Detail <b>D</b></span><span>At rest</span></div>
+          <div class="stage"><img src="assets/svg/title.svg" alt="Drawing title block: T3 Code general arrangement, drawn by agent, checked by you, revision B" width="281" height="97"></div>
+          <h3>Quiet by default</h3>
+          <p>Reduced motion is respected everywhere. Narrow windows dock the drawing under the sidebar.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="watch" aria-labelledby="h-watch">
+      <div class="sec-head reveal">
+        <div class="no" aria-hidden="true">02</div>
+        <div><div class="eyebrow">Watch it work</div><h2 id="h-watch">One full turn, start to finish.</h2></div>
+        <p>A captioned walkthrough of every state: idle, composing, a turn in flight, background agents, the answer landing, and narrow windows. There's also a 30-second cut with sound.</p>
+      </div>
+      <div class="films">
+        <figure class="film reveal">
+          <video controls preload="metadata" playsinline poster="assets/demo.jpg">
+            <source src="assets/demo.mp4" type="video/mp4">
+          </video>
+          <figcaption><span><b>Demo</b> · captioned walkthrough</span><span>1:24</span></figcaption>
+        </figure>
+        <figure class="film reveal">
+          <video controls preload="metadata" playsinline poster="assets/sizzle.jpg">
+            <source src="assets/sizzle.mp4" type="video/mp4">
+          </video>
+          <figcaption><span><b>Sizzle</b> · sound on</span><span>0:30</span></figcaption>
+          <p class="aside">Footage is a staged replica of the T3 Code window, styled with the theme's actual CSS, with made-up threads.</p>
+        </figure>
+      </div>
+    </section>
+
+    <section id="materials" aria-labelledby="h-mat">
+      <div class="sec-head reveal">
+        <div class="no" aria-hidden="true">03</div>
+        <div><div class="eyebrow">Materials schedule</div><h2 id="h-mat">Cyanotype paper, chalk ink, one yellow pencil.</h2></div>
+        <p>Blue is the paper and white is the ink. Yellow is reserved for things that need you: focus, the send button, and work in progress. Click a row to copy its hex.</p>
+      </div>
+      <div class="cols2 reveal" id="schedule">
+        <table class="schedule">
+          <thead><tr><th class="sw"></th><th>Role</th><th>Hex</th><th class="use">Used for</th></tr></thead>
+          <tbody>
+            <tr data-hex="#0b3260"><td class="sw"><i style="background:#0b3260"></i></td><td class="role">Canvas</td><td class="hex">#0B3260<span>COPIED</span></td><td class="use">The sheet itself</td></tr>
+            <tr data-hex="#082646"><td class="sw"><i style="background:#082646"></i></td><td class="role">Sidebar</td><td class="hex">#082646<span>COPIED</span></td><td class="use">Thread list</td></tr>
+            <tr data-hex="#134a80"><td class="sw"><i style="background:#134a80"></i></td><td class="role">Message</td><td class="hex">#134A80<span>COPIED</span></td><td class="use">Your prompts</td></tr>
+            <tr data-hex="#082545"><td class="sw"><i style="background:#082545"></i></td><td class="role">Code</td><td class="hex">#082545<span>COPIED</span></td><td class="use">Code blocks</td></tr>
+            <tr data-hex="#2b5d91"><td class="sw"><i style="background:#2b5d91"></i></td><td class="role">Border</td><td class="hex">#2B5D91<span>COPIED</span></td><td class="use">Rules and frames</td></tr>
+          </tbody>
+        </table>
+        <table class="schedule">
+          <thead><tr><th class="sw"></th><th>Role</th><th>Hex</th><th class="use">Used for</th></tr></thead>
+          <tbody>
+            <tr data-hex="#eef6ff"><td class="sw"><i style="background:#eef6ff"></i></td><td class="role">Text</td><td class="hex">#EEF6FF<span>COPIED</span></td><td class="use">Chalk ink</td></tr>
+            <tr data-hex="#a6c3e0"><td class="sw"><i style="background:#a6c3e0"></i></td><td class="role">Muted</td><td class="hex">#A6C3E0<span>COPIED</span></td><td class="use">Secondary text</td></tr>
+            <tr data-hex="#ffd166"><td class="sw"><i style="background:#ffd166"></i></td><td class="role">Accent</td><td class="hex">#FFD166<span>COPIED</span></td><td class="use">Focus, send, work</td></tr>
+            <tr data-hex="#7fe3ff"><td class="sw"><i style="background:#7fe3ff"></i></td><td class="role">Update</td><td class="hex">#7FE3FF<span>COPIED</span></td><td class="use">Links, updates</td></tr>
+            <tr data-hex="#ff8585"><td class="sw"><i style="background:#ff8585"></i></td><td class="role">Error</td><td class="hex">#FF8585<span>COPIED</span></td><td class="use">Redline</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="install" aria-labelledby="h-install">
+      <div class="sec-head reveal">
+        <div class="no" aria-hidden="true">04</div>
+        <div><div class="eyebrow">Install</div><h2 id="h-install">On your screen in about ten seconds.</h2></div>
+        <p>Blueprint is a single JSON file: colors plus a little CSS. Add it from inside the app, or set it from the terminal.</p>
+      </div>
+      <div class="install">
+        <div class="card main reveal">
+          <h3>From the app</h3>
+          <p class="sub">No terminal needed.</p>
+          <ol class="steps">
+            <li><strong>Copy the theme</strong>
+              <div class="row">
+                <button class="btn primary" id="copyjson" type="button">Copy theme JSON</button>
+                <a class="btn ghost" href="blueprint.json" download="blueprint.json">Download file</a>
+              </div>
+            </li>
+            <li><strong>Open the theme picker</strong><span class="path">Settings <b>›</b> Appearance <b>›</b> Add theme</span></li>
+            <li><strong>Paste it, or choose the file</strong>Then add it. Blueprint is selected for you.</li>
+          </ol>
+        </div>
+        <div class="card reveal">
+          <h3>From the terminal</h3>
+          <p class="sub">Downloads the theme, then publishes it and switches to it in one step.</p>
+<pre class="cmd" id="cmd"><span class="p">$</span> curl -fsSL -o blueprint.json \
+    https://joshsaintjacque.github.io/t3code-theme-blueprint/blueprint.json
+<span class="p">$</span> ~/.t3/bin/t3 theme set blueprint.json</pre>
+          <button class="btn ghost copy-cmd" id="copycmd" type="button">Copy commands</button>
+          <p class="fine">This sets the theme for the whole environment, so every client connected to it switches. Switch back anytime in Settings › Appearance.</p>
+        </div>
+      </div>
+      <p class="fine reveal">Tested on T3 Code v0.1.10 (nightly). Want your own variant? The theme is generated by <a href="https://github.com/joshsaintjacque/t3code-theme-blueprint/blob/main/source/build.py"><code>source/build.py</code></a>.</p>
+    </section>
+  </main>
+
+  <footer>
+    <div class="tblock reveal">
+      <div class="wide"><small>TITLE</small><span>BLUEPRINT · A THEME FOR T3 CODE</span></div>
+      <div><small>REV</small><span class="y">B</span></div>
+      <div><small>SCALE</small><span>1:1</span></div>
+      <div><small>SHEET</small><span>01 OF 01</span></div>
+      <div class="wide"><small>SOURCE</small><span><a href="https://github.com/joshsaintjacque/t3code-theme-blueprint">github.com/joshsaintjacque/t3code-theme-blueprint</a></span></div>
+      <div><small>DRN</small><span>AGENT</span></div>
+      <div><small>CHK</small><span>YOU</span></div>
+      <div><small>LICENSE</small><span>MIT</span></div>
+    </div>
+    <p class="disclaimer">A community theme. Not affiliated with or endorsed by T3 Code.</p>
+  </footer>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(() => {
+  const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const root = document.documentElement;
+
+  // draw the wordmark once fonts are in
+  const go = () => root.classList.add('drawn');
+  (document.fonts && document.fonts.ready ? Promise.race([document.fonts.ready, new Promise(r => setTimeout(r, 1200))]) : Promise.resolve()).then(() => requestAnimationFrame(go));
+
+  // sheet border zones
+  const sheet = $('#sheet');
+  for (let i = 1; i <= 8; i++) { const t = document.createElement('i'); t.className = 't'; t.style.left = ((i - .5) / 8 * 100) + '%'; t.textContent = i; sheet.appendChild(t); }
+  'ABCDEF'.split('').forEach((c, i) => { const l = document.createElement('i'); l.className = 'l'; l.style.top = ((i + .5) / 6 * 100) + '%'; l.textContent = c; sheet.appendChild(l); });
+
+  // CAD crosshair with coordinate readout
+  const xh = $('#xh'), h = xh.querySelector('.h'), v = xh.querySelector('.v'), r = xh.querySelector('.r');
+  if (matchMedia('(pointer: fine)').matches) {
+    let raf = 0, px = 0, py = 0;
+    addEventListener('pointermove', e => {
+      px = e.clientX; py = e.clientY; xh.classList.add('on');
+      if (!raf) raf = requestAnimationFrame(() => {
+        raf = 0;
+        h.style.transform = `translateY(${py}px)`; v.style.transform = `translateX(${px}px)`;
+        r.style.transform = `translate(${px + 12}px,${py + 12}px)`;
+        r.textContent = `X ${String(Math.round(px)).padStart(4, '0')}  Y ${String(Math.round(py + scrollY)).padStart(4, '0')}`;
+      });
+    }, { passive: true });
+    document.addEventListener('pointerleave', () => xh.classList.remove('on'));
+  }
+
+  // hero loop: play only when visible, never under reduced motion
+  const hero = $('#hero');
+  if (reduce) hero.poster = 'assets/screenshot.jpg';
+  else {
+    new IntersectionObserver(([e]) => { if (e.isIntersecting) hero.play().catch(() => {}); else hero.pause(); }, { threshold: .15 }).observe(hero);
+  }
+
+  // balloon <-> legend highlighting
+  const hot = (b, on) => $$(`[data-b="${b}"]`).forEach(el => el.classList.toggle('hot', on));
+  $$('[data-b]').forEach(el => {
+    el.addEventListener('pointerenter', () => hot(el.dataset.b, true));
+    el.addEventListener('pointerleave', () => hot(el.dataset.b, false));
+  });
+
+  // scroll reveals
+  if ('IntersectionObserver' in window && !reduce) {
+    const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { rootMargin: '0px 0px -8% 0px' });
+    $$('.reveal').forEach(el => io.observe(el));
+  } else { $$('.reveal').forEach(el => el.classList.add('in')); root.classList.add('no-io'); }
+
+  // replot: restart the SVG's own animation clock
+  $('#replay').addEventListener('click', () => { const img = $('#plotimg'); const src = img.getAttribute('src').split('?')[0]; img.src = src + '?t=' + Date.now(); });
+
+  // clipboard helpers
+  const toast = $('#toast'); let tt;
+  const say = m => { toast.textContent = m; toast.classList.add('on'); clearTimeout(tt); tt = setTimeout(() => toast.classList.remove('on'), 2200); };
+  const copy = async text => {
+    try { await navigator.clipboard.writeText(text); return true; }
+    catch { const ta = document.createElement('textarea'); ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0'; document.body.appendChild(ta); ta.select(); let ok = false; try { ok = document.execCommand('copy'); } catch {} ta.remove(); return ok; }
+  };
+
+  // prefetch the theme so the copy happens inside the click (Safari drops clipboard access after an await on the network)
+  let themeText = null;
+  fetch('blueprint.json').then(r => r.ok ? r.text() : null).then(t => { themeText = t; }).catch(() => {});
+  $('#copyjson').addEventListener('click', async () => {
+    if (!themeText) { say('Still loading. Use “Download file” instead'); return; }
+    say(await copy(themeText) ? 'Copied. Paste it into Add theme' : 'Copy failed. Use “Download file”');
+  });
+  $('#copycmd').addEventListener('click', async () => {
+    const text = $('#cmd').innerText.split('\n').map(l => l.replace(/^\$\s*/, '')).join('\n').trim();
+    say(await copy(text) ? 'Commands copied' : 'Copy failed. Select the text instead');
+  });
+  $$('.schedule tbody tr').forEach(tr => tr.addEventListener('click', async () => {
+    if (await copy(tr.dataset.hex)) { tr.classList.add('copied'); setTimeout(() => tr.classList.remove('copied'), 1400); say(tr.dataset.hex.toUpperCase() + ' copied'); }
+  }));
+})();
+</script>
+</body>
+</html>
