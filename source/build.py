@@ -3,7 +3,7 @@ import json, math, os, re
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 INK = "#d6ebff"      # chalk-white line
-FAINT = "#8fb8e0"    # construction line
+FAINT = "#d5eaff"    # construction line
 PENCIL = "#ffd166"   # markup yellow
 T = 32               # plot cycle seconds
 MONO = "ui-monospace,Menlo,monospace"
@@ -193,7 +193,7 @@ def part_svg(static=False):
         for n, _, d in strokes)
     body = (
         f"<defs><path id='a' d='M0 0l9-3v6z' style='fill:{INK};fill-opacity:.8'/>"
-        f"<mask id='m'><path d='M300 140h160v160H300z' style='fill:%23fff'/><circle cx='400' cy='222' r='23' style='fill:%23000'/></mask></defs>"
+        f"<mask id='m'><path d='M300 140h160v160H300z' style='fill:%23ffffff'/><circle cx='400' cy='222' r='23' style='fill:%23000000'/></mask></defs>"
         # pencil underlay (always present)
         "<g transform='matrix(0 1 -1 0 360 0)'>"  # drawn landscape, shown portrait
         f"<path class='f' stroke-dasharray='3 4' d='{outline_d}'/>"
@@ -248,26 +248,26 @@ def data_uri(svg):
 
 # ---------------------------------------------------------------- theme
 colors = {
-    "canvas": "#0b3260", "chrome": "#082a50", "toolbar": "#0b3260", "toolbarForeground": "#e8f3ff",
-    "toolbarBorder": "#24568a", "toolbarControl": "#0f3c6e", "toolbarControlForeground": "#e8f3ff",
-    "toolbarControlHover": "#164a82", "surface": "#0d3766", "surfaceRaised": "#114073",
-    "surfaceOverlay": "#134779", "text": "#eef6ff", "textMuted": "#a6c3e0", "border": "#2b5d91",
-    "input": "#4f86bd", "focus": "#ffd166", "accent": "#ffd166", "accentForeground": "#1d1a10",
-    "secondary": "#12437a", "secondaryForeground": "#e8f3ff", "muted": "#0f3a69",
-    "mutedForeground": "#93b4d6", "placeholder": "#7fa2c7", "secondaryLabel": "#93b4d6",
-    "iconMuted": "#93b4d6", "error": "#ff8585", "errorForeground": "#ffb0b0", "errorSurface": "#3b1d33",
-    "warning": "#ffb347", "warningForeground": "#ffd08a", "warningSurface": "#4a3414",
-    "update": "#7fe3ff", "updateForeground": "#e6fbff", "updateSurface": "#0f4a6e",
-    "accentSurface": "#1c4f7a", "accentSurfaceForeground": "#ffeab0", "messageSurface": "#134a80",
+    "canvas": "#2466c3", "chrome": "#245eab", "toolbar": "#2466c3", "toolbarForeground": "#e8f3ff",
+    "toolbarBorder": "#348ef5", "toolbarControl": "#005abc", "toolbarControlForeground": "#e8f3ff",
+    "toolbarControlHover": "#004d9f", "surface": "#1660be", "surfaceRaised": "#0057b3",
+    "surfaceOverlay": "#0053a0", "text": "#eef6ff", "textMuted": "#d7ebff", "border": "#3c96fd",
+    "input": "#91c4ff", "focus": "#ffd166", "accent": "#ffd166", "accentForeground": "#1d1a10",
+    "secondary": "#0052ae", "secondaryForeground": "#e8f3ff", "muted": "#0c5ebb",
+    "mutedForeground": "#d5eaff", "placeholder": "#d8eafe", "secondaryLabel": "#d5eaff",
+    "iconMuted": "#d5eaff", "error": "#ffa9a6", "errorForeground": "#ffb0b0", "errorSurface": "#4b2c43",
+    "warning": "#ffb347", "warningForeground": "#ffd08a", "warningSurface": "#5b4424",
+    "update": "#bef0ff", "updateForeground": "#e6fbff", "updateSurface": "#00598d",
+    "accentSurface": "#004f8c", "accentSurfaceForeground": "#ffeab0", "messageSurface": "#004f9c",
     "messageForeground": "#f2f8ff", "messageAction": "#ffd166", "messageActionForeground": "#1d1a10",
-    "messageActionHover": "#ffe08f", "codeBackground": "#082545", "codeForeground": "#e3f0ff",
-    "searchMatchBackground": "#6b5a1e", "searchMatchForeground": "#fff8e1",
+    "messageActionHover": "#ffe08f", "codeBackground": "#27599a", "codeForeground": "#e3f0ff",
+    "searchMatchBackground": "#7d6b31", "searchMatchForeground": "#fff8e1",
     "searchMatchActiveBackground": "#ffd166", "searchMatchActiveForeground": "#1d1a10",
-    "sidebar": "#082646", "sidebarForeground": "#e3efff", "sidebarMutedForeground": "#8fb0d3",
-    "sidebarControlSurface": "#0e3663", "sidebarRowHover": "#0e3866", "sidebarRowActive": "#124174",
-    "sidebarRowSelected": "#154a82", "sidebarBorder": "#1f4c7c", "terminalBackground": "#071f3b",
-    "terminalForeground": "#e3efff", "terminalCursor": "#ffd166", "terminalSelection": "#1e4f84",
-    "terminalScrollbar": "#1f4c7c", "terminalScrollbarHover": "#2d6299",
+    "sidebar": "#265a9c", "sidebarForeground": "#e3efff", "sidebarMutedForeground": "#d7eaff",
+    "sidebarControlSurface": "#1c62bd", "sidebarRowHover": "#1460bc", "sidebarRowActive": "#0056b1",
+    "sidebarRowSelected": "#004e9e", "sidebarBorder": "#004d9a", "terminalBackground": "#28528c",
+    "terminalForeground": "#e3efff", "terminalCursor": "#ffd166", "terminalSelection": "#2e86f0",
+    "terminalScrollbar": "#004d9a", "terminalScrollbarHover": "#479cff",
 }
 
 Y = "#ffd166"
@@ -302,53 +302,53 @@ def busy(sel):
 GRID_IMAGES = ",".join(f"linear-gradient({d}{W}{o}) 1px,transparent 1px)" for o in (".09", ".035") for d in ("", "90deg,"))
 SB_GRID = f"linear-gradient({W}.03) 1px,transparent 1px),linear-gradient(90deg,{W}.03) 1px,transparent 1px)"
 SB_GRID_L = SB_GRID.replace("1px),linear", "1px) 0 0/16px 16px,linear") + " 0 0/16px 16px"
-DIM = "linear-gradient(rgba(8,38,70,.3),rgba(8,38,70,.3))"
+DIM = "linear-gradient(rgba(38,90,156,.3),rgba(38,90,156,.3))"
 SB_POS = "50% calc(100% - 60px)"
 css = (
     # the finished sheet (idle) and the live plotter (working), shared by the gutter and the narrow fallback
     ":root{--bp-s:" + data_uri(part_svg(True)) + ";--bp-a:" + data_uri(part_svg()) + f";--bp-c:{corner}}}"
     "[data-workspace-area=\"conversation\"]{background:"
     f"var(--bp-s) left 12px top 64px/{gutter_size(216, 380)} no-repeat,"
-    "radial-gradient(ellipse at 50% 40%,transparent 40%,rgba(3,18,38,.55)),"
-    + grid + ",#0d3a69!important}"
-    + busy('[data-workspace-area="conversation"]') + "{background-image:var(--bp-a),radial-gradient(ellipse at 50% 40%,transparent 40%,rgba(3,18,38,.55))," + GRID_IMAGES + "!important}"
+    "radial-gradient(ellipse at 50% 40%,transparent 40%,rgba(37,67,110,.55)),"
+    + grid + ",#055ebb!important}"
+    + busy('[data-workspace-area="conversation"]') + "{background-image:var(--bp-a),radial-gradient(ellipse at 50% 40%,transparent 40%,rgba(37,67,110,.55))," + GRID_IMAGES + "!important}"
     # sheet border + docked title block, layered over the reading-column scrim
     f"[data-workspace-area=\"conversation\"] .messages-timeline-scroll{{background:" + data_uri(title_svg()) + f" right 10px bottom 10px/min(281px,clamp(0px,({G} - 200px)*1000,{G} - 32px)) auto no-repeat,"
     + ",".join(f"linear-gradient({W}.2),{W}.2)) {p} no-repeat" for p in ("10px 10px/calc(100% - 20px) 1px", "10px calc(100% - 10px)/calc(100% - 20px) 1px", "10px 10px/1px calc(100% - 20px)", "calc(100% - 10px) 10px/1px calc(100% - 20px)"))
-    + f",linear-gradient(90deg,transparent calc(50% - {CW}/2 - 112px),rgba(10,44,82,.9) calc(50% - {CW}/2 - 16px),rgba(10,44,82,.9) calc(50% + {CW}/2 + 16px),transparent calc(50% + {CW}/2 + 112px))!important}}"
+    + f",linear-gradient(90deg,transparent calc(50% - {CW}/2 - 112px),rgba(38,96,173,.9) calc(50% - {CW}/2 - 16px),rgba(38,96,173,.9) calc(50% + {CW}/2 + 16px),transparent calc(50% + {CW}/2 + 112px))!important}}"
     # header = the plotter's gantry rail; the carriage drops in and shuttles only while a turn runs, then retracts where it stopped
-    f"[data-chat-header]{{background-color:rgba(9,40,74,.95)!important;background-image:linear-gradient({Y},{Y}),linear-gradient({Y},{Y})!important;background-repeat:no-repeat!important;background-size:0 2px,2px 0!important;background-position:100% 100%,calc(100% - 13px) 100%;border-bottom:1px dashed rgba(214,235,255,.22)!important;transition:background-size .4s;animation:bp-car 8s cubic-bezier(.45,0,.55,1) infinite alternate paused}}"
+    f"[data-chat-header]{{background-color:rgba(38,92,162,.95)!important;background-image:linear-gradient({Y},{Y}),linear-gradient({Y},{Y})!important;background-repeat:no-repeat!important;background-size:0 2px,2px 0!important;background-position:100% 100%,calc(100% - 13px) 100%;border-bottom:1px dashed rgba(214,235,255,.22)!important;transition:background-size .4s;animation:bp-car 8s cubic-bezier(.45,0,.55,1) infinite alternate paused}}"
     + busy("[data-chat-header]") + "{animation-play-state:running;background-size:28px 2px,2px 7px!important}"
     "@keyframes bp-car{to{background-position:0 100%,13px 100%}}"
     # a pencil dash marches under "Working…" and, softer, under every busy thread in the sidebar
     "[data-timeline-row-kind=\"working\"],[data-thread-item] [aria-busy=\"true\"]{background-image:linear-gradient(90deg,rgba(255,209,102,var(--a,.75)) 50%,transparent 0)!important;background-size:14px 1px!important;background-repeat:repeat-x!important;background-position:0 100%;animation:bp-march var(--d,1.4s) steps(7) infinite}"
     "[data-thread-item] [aria-busy=\"true\"]{--a:.45;--d:2.8s}"
     "@keyframes bp-march{to{background-position:14px 100%}}"
-    f"[data-slot=\"sidebar-inner\"]{{background:{SB_GRID_L},#082646!important}}"
+    f"[data-slot=\"sidebar-inner\"]{{background:{SB_GRID_L},#265a9c!important}}"
     # narrow windows: no gutter, so the sheet docks at the foot of the sidebar instead
-    f"@media (max-width:1459px){{[data-slot=\"sidebar-inner\"]{{background:{DIM} {SB_POS}/150px 233px no-repeat,var(--bp-s) {SB_POS}/150px 233px no-repeat,{SB_GRID_L},#082646!important}}"
+    f"@media (max-width:1459px){{[data-slot=\"sidebar-inner\"]{{background:{DIM} {SB_POS}/150px 233px no-repeat,var(--bp-s) {SB_POS}/150px 233px no-repeat,{SB_GRID_L},#265a9c!important}}"
     + busy('[data-slot="sidebar-inner"]') + f"{{background-image:{DIM},var(--bp-a),{SB_GRID}!important}}}}"
     f"[data-thread-item]{{background-image:linear-gradient({Y},{Y});background-repeat:no-repeat;background-position:10px calc(100% - 2px);background-size:0 1px;transition:background-size .45s cubic-bezier(.2,.7,.2,1)}}"
     "[data-thread-item]:hover{background-size:calc(100% - 20px) 1px}"
     f"[data-thread-item] [aria-current]:not([aria-current=\"false\"]){{box-shadow:inset 2px 0 {Y}}}"
     "[data-thread-item] [role=\"button\"]{border-radius:2px!important}[data-thread-item]:has([aria-busy=\"true\"]){background-size:0 1px!important}"
-    "[data-user-message-bubble]{background:var(--bp-c),rgba(18,70,124,.92)!important;border:1px solid rgba(214,235,255,.4)!important;border-radius:2px!important}"
-    "[data-slot=\"composer-host\"]{background:var(--bp-c),rgba(8,36,68,.96)!important;border:1px solid rgba(214,235,255,.42)!important;border-radius:3px!important;transition:border-color .2s,box-shadow .3s,background-size .3s cubic-bezier(.2,.7,.2,1)}"
+    "[data-user-message-bubble]{background:var(--bp-c),rgba(0,82,165,.92)!important;border:1px solid rgba(214,235,255,.4)!important;border-radius:2px!important}"
+    "[data-slot=\"composer-host\"]{background:var(--bp-c),rgba(39,88,153,.96)!important;border:1px solid rgba(214,235,255,.42)!important;border-radius:3px!important;transition:border-color .2s,box-shadow .3s,background-size .3s cubic-bezier(.2,.7,.2,1)}"
     "[data-slot=\"composer-host\"]:focus-within{border-color:rgba(214,235,255,.8)!important;box-shadow:0 0 0 3px rgba(214,235,255,.1);background-size:22px 1px,1px 22px,22px 1px,1px 22px,auto!important}"
-    ".chat-markdown-codeblock{background:rgba(6,30,58,.94)!important;border:1px dashed rgba(143,184,224,.4)!important;border-radius:2px!important}"
+    ".chat-markdown-codeblock{background:rgba(38,81,139,.94)!important;border:1px dashed rgba(143,184,224,.4)!important;border-radius:2px!important}"
     ".chat-markdown :not(pre)>code{color:#cdeeff;background:rgba(127,227,255,.1);padding:.05em .3em;border-radius:2px}"
     f".chat-markdown :is(h1,h2,h3){{font-family:{MONO};letter-spacing:.06em;text-transform:uppercase}}.chat-markdown :is(h1,h2,h3) code{{text-transform:none}}"
     ".chat-markdown :is(h1,h2){border-bottom:1px solid rgba(214,235,255,.22);padding-bottom:.2em}"
-    ".chat-markdown a{color:#7fe3ff!important;text-decoration-style:dashed;text-underline-offset:3px}"
+    ".chat-markdown a{color:#bef0ff!important;text-decoration-style:dashed;text-underline-offset:3px}"
     "::selection{background:rgba(255,209,102,.32)}"
-    "[data-slot=\"dialog-popup\"],[data-slot=\"popover-popup\"],[data-slot=\"menu-popup\"]{border-radius:3px!important;border:1px solid #4f86bd!important}"
+    "[data-slot=\"dialog-popup\"],[data-slot=\"popover-popup\"],[data-slot=\"menu-popup\"]{border-radius:3px!important;border:1px solid #91c4ff!important}"
     "[data-slot=\"tooltip-popup\"],[data-slot=\"button\"],[data-slot=\"input\"],[data-slot=\"select-trigger\"]{border-radius:3px!important}"
     "::-webkit-scrollbar-thumb,[data-slot=\"scroll-area-thumb\"]{background:rgba(214,235,255,.2)!important;border-radius:0!important}"
     "::-webkit-scrollbar-thumb:hover{background:rgba(255,209,102,.5)!important}"
     "@media (prefers-reduced-motion:reduce){[data-thread-item],[data-thread-item] [aria-busy],[data-timeline-row-kind],[data-slot=\"composer-host\"],[data-chat-header]{transition:none!important;animation:none!important}}"
 )
 
-theme = {"version": 1, "name": "Blueprint", "appearance": "dark", "accent": "#ffd166", "canvas": "#0b3260",
+theme = {"version": 1, "name": "Blueprint", "appearance": "dark", "accent": "#ffd166", "canvas": "#2466c3",
          "colors": colors, "css": css}
 
 with open(os.path.join(HERE, "..", "blueprint.json"), "w") as fh:

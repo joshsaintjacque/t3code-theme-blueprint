@@ -46,14 +46,14 @@ Blue is the paper, white is the ink, and yellow is reserved for things that need
 
 | Role | Hex |
 |---|---|
-| Canvas | `#0B3260` |
-| Sidebar | `#082646` |
-| Message | `#134A80` |
+| Canvas | `#2466C3` |
+| Sidebar | `#265A9C` |
+| Message | `#004F9C` |
 | Text | `#EEF6FF` |
-| Muted | `#A6C3E0` |
+| Muted | `#D7EBFF` |
 | Accent | `#FFD166` |
-| Update | `#7FE3FF` |
-| Error | `#FF8585` |
+| Update | `#BEF0FF` |
+| Error | `#FFA9A6` |
 
 ## Make your own variant
 

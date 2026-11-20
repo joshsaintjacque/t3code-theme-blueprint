@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Blueprint · a theme for T3 Code</title>
 <meta name="description" content="A cyanotype theme for T3 Code. While your agent works, a pen plotter inks a part in the margin. When the turn ends, the sheet holds still.">
-<meta name="theme-color" content="#0b3260">
+<meta name="theme-color" content="#2466c3">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Blueprint · a theme for T3 Code">
 <meta property="og:description" content="Your agent drafts. The sheet fills in. A cyanotype theme that only moves while work is happening.">
@@ -15,17 +15,17 @@
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://joshsaintjacque.github.io/t3code-theme-blueprint/assets/og.png">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230b3260'/%3E%3Cpath d='M16 5v22M5 16h22' stroke='%23d6ebff' stroke-width='1.5' stroke-opacity='.6'/%3E%3Ccircle cx='16' cy='16' r='6' fill='none' stroke='%23ffd166' stroke-width='2.5'/%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%232466c3'/%3E%3Cpath d='M16 5v22M5 16h22' stroke='%23d6ebff' stroke-width='1.5' stroke-opacity='.6'/%3E%3Ccircle cx='16' cy='16' r='6' fill='none' stroke='%23ffd166' stroke-width='2.5'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Instrument+Sans:ital,wght@0,400..700;1,400&family=Martian+Mono:wdth,wght@75..112.5,300..800&display=swap" rel="stylesheet">
 <style>
 :root{
-  --paper:#0b3260; --paper-deep:#072448; --paper-ink:#051a33;
-  --chrome:#082a50; --surface:#0d3766; --raised:#114073;
-  --line:#2b5d91; --line-soft:rgba(214,235,255,.14); --grid:rgba(214,235,255,.06); --grid-fine:rgba(214,235,255,.028);
-  --chalk:#eef6ff; --ink:#d6ebff; --muted:#a6c3e0; --faint:#7fa2c7;
-  --pencil:#ffd166; --pencil-ink:#1d1a10; --cyan:#7fe3ff;
+  --paper:#2466c3; --paper-deep:#2657a1; --paper-ink:#274d81;
+  --chrome:#245eab; --surface:#1660be; --raised:#0057b3;
+  --line:#3c96fd; --line-soft:rgba(214,235,255,.14); --grid:rgba(214,235,255,.06); --grid-fine:rgba(214,235,255,.028);
+  --chalk:#eef6ff; --ink:#d6ebff; --muted:#d7ebff; --faint:#d8eafe;
+  --pencil:#ffd166; --pencil-ink:#1d1a10; --cyan:#bef0ff;
   --mono:"Martian Mono",ui-monospace,"SF Mono",Menlo,monospace;
   --sans:"Instrument Sans",ui-sans-serif,system-ui,sans-serif;
   --hand:"Architects Daughter","Comic Sans MS",cursive;
@@ -36,7 +36,7 @@
 html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
 body{margin:0;background:var(--paper-ink);color:var(--chalk);font:400 17px/1.6 var(--sans);overflow-x:hidden;
   background:
-    radial-gradient(ellipse 90% 60% at 50% 0%,rgba(41,105,170,.45),transparent 70%),
+    radial-gradient(ellipse 90% 60% at 50% 0%,rgba(91,165,255,.45),transparent 70%),
     linear-gradient(var(--grid) 1px,transparent 1px) 0 0/96px 96px,
     linear-gradient(90deg,var(--grid) 1px,transparent 1px) 0 0/96px 96px,
     linear-gradient(var(--grid-fine) 1px,transparent 1px) 0 0/16px 16px,
@@ -105,7 +105,7 @@ header.top{display:flex;align-items:center;justify-content:space-between;gap:16p
 .btn:active{transform:translateY(1px)}
 .btn.primary{background:var(--pencil);color:var(--pencil-ink)}
 .btn.primary:hover{background:#ffe08f;color:var(--pencil-ink)}
-.btn.ghost{border-color:var(--line);color:var(--chalk);background:rgba(8,42,80,.5)}
+.btn.ghost{border-color:var(--line);color:var(--chalk);background:rgba(36,94,172,.5)}
 .btn.ghost:hover{border-color:var(--ink);color:var(--chalk)}
 .btn svg{width:14px;height:14px}
 .rise{opacity:1}
@@ -117,7 +117,7 @@ header.top{display:flex;align-items:center;justify-content:space-between;gap:16p
 /* hero drawing */
 .plate{position:relative;margin:clamp(44px,7vh,72px) 0 0;padding:0 0 0 30px}
 .plate-in{position:relative;border-radius:12px;overflow:visible}
-.plate video,.plate .poster{width:100%;aspect-ratio:1600/820;border-radius:11px;background:#0b3260 url(assets/hero.jpg) center/cover;box-shadow:0 0 0 1px rgba(214,235,255,.16),0 40px 90px -30px rgba(0,0,0,.75),0 0 120px -40px rgba(127,227,255,.25)}
+.plate video,.plate .poster{width:100%;aspect-ratio:1600/820;border-radius:11px;background:#2466c3 url(assets/hero.jpg) center/cover;box-shadow:0 0 0 1px rgba(214,235,255,.16),0 40px 90px -30px rgba(0,0,0,.75),0 0 120px -40px rgba(127,227,255,.25)}
 .plate .vdim{position:absolute;left:-30px;top:0;bottom:0;width:22px;color:var(--faint)}
 .plate .vdim:before{content:"";position:absolute;left:50%;top:0;bottom:0;border-left:1px solid currentColor;opacity:.55}
 .plate .vdim:after{content:"";position:absolute;left:4px;right:4px;top:0;bottom:0;border-top:1px solid currentColor;border-bottom:1px solid currentColor;opacity:.55}
@@ -127,7 +127,7 @@ header.top{display:flex;align-items:center;justify-content:space-between;gap:16p
 .note.n1{right:2%;top:-58px;text-align:right}
 .note.n1 svg{right:58%;top:22px;width:70px;height:48px}
 @media (max-width:760px){.note.n1{display:none}}
-.balloon{position:absolute;width:28px;height:28px;margin:-14px 0 0 -14px;border-radius:50%;border:1.5px solid var(--pencil);background:rgba(7,36,72,.86);color:var(--pencil);font:600 12px/25px var(--mono);text-align:center;box-shadow:0 0 0 4px rgba(255,209,102,.12);cursor:default;transition:transform .2s,background-color .2s,color .2s}
+.balloon{position:absolute;width:28px;height:28px;margin:-14px 0 0 -14px;border-radius:50%;border:1.5px solid var(--pencil);background:rgba(38,87,161,.86);color:var(--pencil);font:600 12px/25px var(--mono);text-align:center;box-shadow:0 0 0 4px rgba(255,209,102,.12);cursor:default;transition:transform .2s,background-color .2s,color .2s}
 .balloon.hot{transform:scale(1.18);background:var(--pencil);color:var(--pencil-ink)}
 @media (max-width:560px){.balloon{width:22px;height:22px;margin:-11px 0 0 -11px;font-size:10px;line-height:19px}}
 .legend{list-style:none;margin:22px 0 0;padding:0 0 0 30px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px 28px;counter-reset:b}
@@ -150,7 +150,7 @@ section{padding:clamp(88px,14vh,148px) 0 0}
 
 /* details grid */
 .details{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:20px}
-.detail{position:relative;border:1px solid var(--line-soft);background:linear-gradient(180deg,rgba(13,55,102,.55),rgba(8,37,72,.55));border-radius:4px;padding:24px;display:flex;flex-direction:column;gap:14px;min-width:0}
+.detail{position:relative;border:1px solid var(--line-soft);background:linear-gradient(180deg,rgba(22,97,191,.55),rgba(39,89,160,.55));border-radius:4px;padding:24px;display:flex;flex-direction:column;gap:14px;min-width:0}
 .detail:before,.detail:after{content:"";position:absolute;width:12px;height:12px;border-color:var(--pencil);border-style:solid;opacity:.75}
 .detail:before{top:-1px;left:-1px;border-width:1.5px 0 0 1.5px}
 .detail:after{bottom:-1px;right:-1px;border-width:0 1.5px 1.5px 0}
@@ -166,10 +166,10 @@ section{padding:clamp(88px,14vh,148px) 0 0}
 @media (max-width:640px){.d-dash,.d-rest{grid-column:span 12}}
 .stage{position:relative;border:1px dashed rgba(214,235,255,.16);border-radius:3px;background:
     linear-gradient(var(--grid) 1px,transparent 1px) 0 0/24px 24px,
-    linear-gradient(90deg,var(--grid) 1px,transparent 1px) 0 0/24px 24px,rgba(5,26,51,.35);overflow:hidden}
+    linear-gradient(90deg,var(--grid) 1px,transparent 1px) 0 0/24px 24px,rgba(39,77,129,.35);overflow:hidden}
 .d-plot .stage{flex:1;display:grid;place-items:center;padding:18px;min-height:340px}
 .d-plot .stage img{width:min(100%,300px);height:auto}
-.d-plot .replay{position:absolute;right:10px;bottom:10px;font:500 10px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted);background:rgba(8,42,80,.85);border:1px solid var(--line);border-radius:3px;padding:7px 9px;cursor:pointer}
+.d-plot .replay{position:absolute;right:10px;bottom:10px;font:500 10px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted);background:rgba(36,94,172,.85);border:1px solid var(--line);border-radius:3px;padding:7px 9px;cursor:pointer}
 .d-plot .replay:hover{color:var(--pencil);border-color:var(--pencil)}
 /* gantry */
 .rail{height:150px;display:flex;flex-direction:column}
@@ -183,15 +183,15 @@ section{padding:clamp(88px,14vh,148px) 0 0}
 .rail .body{flex:1;display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:16px}
 .rail .body i{display:block;height:7px;border-radius:2px;background:rgba(214,235,255,.1);margin-bottom:9px}
 .rail .body i:nth-child(2){width:80%}.rail .body i:nth-child(3){width:60%}
-.rail .body .q{justify-self:end;width:72%;height:28px;border:1px solid #4f86bd;background:#134a80;border-radius:2px}
+.rail .body .q{justify-self:end;width:72%;height:28px;border:1px solid #91c4ff;background:#004f9c;border-radius:2px}
 /* marching dash */
 .rows{padding:10px 0}
 .rows div{display:flex;justify-content:space-between;align-items:center;padding:9px 16px;font:500 13.5px/1.2 var(--sans);color:#e3efff;position:relative}
-.rows div small{font-size:11.5px;color:#8fb0d3}
+.rows div small{font-size:11.5px;color:#d7eaff}
 .rows .busy small{color:var(--pencil)}
 .rows .busy:after{content:"";position:absolute;left:16px;right:16px;bottom:2px;height:1px;background:repeating-linear-gradient(90deg,var(--pencil) 0 7px,transparent 7px 12px);opacity:.85;animation:march .7s steps(7) infinite}
 @keyframes march{to{background-position-x:12px}}
-.rows .sel{background:#154a82}
+.rows .sel{background:#004e9e}
 /* at rest */
 .d-rest .stage{display:grid;place-items:center;padding:16px;min-height:150px}
 .d-rest .stage img{width:100%;max-width:260px;height:auto}
@@ -199,7 +199,7 @@ section{padding:clamp(88px,14vh,148px) 0 0}
 /* ---------- films */
 .films{display:grid;grid-template-columns:minmax(0,1fr)}
 .film{margin:0}
-.film video{width:100%;aspect-ratio:16/9;border-radius:6px;background:#051a33;box-shadow:0 0 0 1px rgba(214,235,255,.16),0 30px 70px -30px rgba(0,0,0,.7)}
+.film video{width:100%;aspect-ratio:16/9;border-radius:6px;background:#274d81;box-shadow:0 0 0 1px rgba(214,235,255,.16),0 30px 70px -30px rgba(0,0,0,.7)}
 .film figcaption{display:flex;justify-content:space-between;gap:12px;margin-top:12px;font:500 11.5px/1.4 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
 .film figcaption b{color:var(--chalk);font-weight:600}
 
@@ -222,7 +222,7 @@ section{padding:clamp(88px,14vh,148px) 0 0}
 /* ---------- install */
 .install{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:24px}
 @media (max-width:900px){.install{grid-template-columns:minmax(0,1fr)}}
-.card{position:relative;border:1px solid var(--line);border-radius:4px;background:rgba(8,42,80,.72);padding:clamp(22px,3vw,34px)}
+.card{position:relative;border:1px solid var(--line);border-radius:4px;background:rgba(36,94,172,.72);padding:clamp(22px,3vw,34px)}
 .card.main{border-color:rgba(255,209,102,.55);box-shadow:0 0 0 4px rgba(255,209,102,.06)}
 .card h3{margin:0 0 4px;font:600 22px/1.2 var(--sans)}
 .card .sub{margin:0 0 22px;color:var(--muted);font-size:15px}
@@ -236,7 +236,7 @@ section{padding:clamp(88px,14vh,148px) 0 0}
 .steps .row{display:flex;flex-wrap:wrap;gap:10px;margin-top:10px}
 .path{font:500 13px/1.5 var(--mono);color:var(--ink)}
 .path b{color:var(--pencil);font-weight:500}
-.cmd{position:relative;margin:14px 0 0;background:#071f3b;border:1px dashed rgba(214,235,255,.28);border-radius:3px;padding:16px 16px 16px 16px;font:400 12.5px/1.75 var(--mono);color:#e3f0ff;overflow-x:auto;white-space:pre}
+.cmd{position:relative;margin:14px 0 0;background:#28528c;border:1px dashed rgba(214,235,255,.28);border-radius:3px;padding:16px 16px 16px 16px;font:400 12.5px/1.75 var(--mono);color:#e3f0ff;overflow-x:auto;white-space:pre}
 .cmd .p{color:var(--pencil)}
 .copy-cmd{margin-top:12px}
 .fine{margin:18px 0 0;font-size:13.5px;color:var(--faint)}
@@ -408,21 +408,21 @@ footer{padding:clamp(96px,14vh,150px) 0 48px}
         <table class="schedule">
           <thead><tr><th class="sw"></th><th>Role</th><th>Hex</th><th class="use">Used for</th></tr></thead>
           <tbody>
-            <tr data-hex="#0b3260"><td class="sw"><i style="background:#0b3260"></i></td><td class="role">Canvas</td><td class="hex">#0B3260<span>COPIED</span></td><td class="use">The sheet itself</td></tr>
-            <tr data-hex="#082646"><td class="sw"><i style="background:#082646"></i></td><td class="role">Sidebar</td><td class="hex">#082646<span>COPIED</span></td><td class="use">Thread list</td></tr>
-            <tr data-hex="#134a80"><td class="sw"><i style="background:#134a80"></i></td><td class="role">Message</td><td class="hex">#134A80<span>COPIED</span></td><td class="use">Your prompts</td></tr>
-            <tr data-hex="#082545"><td class="sw"><i style="background:#082545"></i></td><td class="role">Code</td><td class="hex">#082545<span>COPIED</span></td><td class="use">Code blocks</td></tr>
-            <tr data-hex="#2b5d91"><td class="sw"><i style="background:#2b5d91"></i></td><td class="role">Border</td><td class="hex">#2B5D91<span>COPIED</span></td><td class="use">Rules and frames</td></tr>
+            <tr data-hex="#2466c3"><td class="sw"><i style="background:#2466c3"></i></td><td class="role">Canvas</td><td class="hex">#2466C3<span>COPIED</span></td><td class="use">The sheet itself</td></tr>
+            <tr data-hex="#265a9c"><td class="sw"><i style="background:#265a9c"></i></td><td class="role">Sidebar</td><td class="hex">#265A9C<span>COPIED</span></td><td class="use">Thread list</td></tr>
+            <tr data-hex="#004f9c"><td class="sw"><i style="background:#004f9c"></i></td><td class="role">Message</td><td class="hex">#004F9C<span>COPIED</span></td><td class="use">Your prompts</td></tr>
+            <tr data-hex="#27599a"><td class="sw"><i style="background:#27599a"></i></td><td class="role">Code</td><td class="hex">#27599A<span>COPIED</span></td><td class="use">Code blocks</td></tr>
+            <tr data-hex="#3c96fd"><td class="sw"><i style="background:#3c96fd"></i></td><td class="role">Border</td><td class="hex">#3C96FD<span>COPIED</span></td><td class="use">Rules and frames</td></tr>
           </tbody>
         </table>
         <table class="schedule">
           <thead><tr><th class="sw"></th><th>Role</th><th>Hex</th><th class="use">Used for</th></tr></thead>
           <tbody>
             <tr data-hex="#eef6ff"><td class="sw"><i style="background:#eef6ff"></i></td><td class="role">Text</td><td class="hex">#EEF6FF<span>COPIED</span></td><td class="use">Chalk ink</td></tr>
-            <tr data-hex="#a6c3e0"><td class="sw"><i style="background:#a6c3e0"></i></td><td class="role">Muted</td><td class="hex">#A6C3E0<span>COPIED</span></td><td class="use">Secondary text</td></tr>
+            <tr data-hex="#d7ebff"><td class="sw"><i style="background:#d7ebff"></i></td><td class="role">Muted</td><td class="hex">#D7EBFF<span>COPIED</span></td><td class="use">Secondary text</td></tr>
             <tr data-hex="#ffd166"><td class="sw"><i style="background:#ffd166"></i></td><td class="role">Accent</td><td class="hex">#FFD166<span>COPIED</span></td><td class="use">Focus, send, work</td></tr>
-            <tr data-hex="#7fe3ff"><td class="sw"><i style="background:#7fe3ff"></i></td><td class="role">Update</td><td class="hex">#7FE3FF<span>COPIED</span></td><td class="use">Links, updates</td></tr>
-            <tr data-hex="#ff8585"><td class="sw"><i style="background:#ff8585"></i></td><td class="role">Error</td><td class="hex">#FF8585<span>COPIED</span></td><td class="use">Redline</td></tr>
+            <tr data-hex="#bef0ff"><td class="sw"><i style="background:#bef0ff"></i></td><td class="role">Update</td><td class="hex">#BEF0FF<span>COPIED</span></td><td class="use">Links, updates</td></tr>
+            <tr data-hex="#ffa9a6"><td class="sw"><i style="background:#ffa9a6"></i></td><td class="role">Error</td><td class="hex">#FFA9A6<span>COPIED</span></td><td class="use">Redline</td></tr>
           </tbody>
         </table>
       </div>
